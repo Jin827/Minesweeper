@@ -18,12 +18,11 @@ const getTdStyles = code => {
     case CODE.MINE:
       return { background: '#444' };
     case CODE.CLICKED_MINE:
-      return { background: 'red' };
     case CODE.OPEN:
-      return { backgournd: 'white' };
+      return { background: 'white' };
     case CODE.FLAG:
     case CODE.FLAG_MINE:
-      return { backgournd: '#E8716F' };
+      return { background: '#E8716F' };
     default:
       return { background: 'white' };
   }
@@ -32,7 +31,6 @@ const getTdStyles = code => {
 const getTdText = code => {
   switch (code) {
     case CODE.NORMAL:
-    case CODE.OPEN:
       return '';
     case CODE.MINE:
       return 'X';
@@ -42,7 +40,7 @@ const getTdText = code => {
     case CODE.FLAG_MINE:
       return '!';
     default:
-      return '';
+      return code || '';
   }
 };
 

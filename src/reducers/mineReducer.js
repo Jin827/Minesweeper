@@ -24,7 +24,34 @@ const MineReducer = (state = initialState, action) => {
       const { row, cell } = action.data;
       const tableData = [...state.tableData];
       tableData[row] = [...state.tableData[row]];
-      tableData[row][cell] = CODE.OPEN;
+
+      let around = [];
+
+      if (tableData[row - 1]) {
+        around = around.concat(
+          tableData[row - 1][cell - 1],
+          tableData[row - 1][cell],
+          tableData[row - 1][cell + 1]
+        );
+      }
+
+      around = around.concat(
+        tableData[row][cell - 1],
+        tableData[row][cell + 1]
+      );
+
+      if (tableData[row + 1]) {
+        around = around.concat(
+          tableData[row + 1][cell - 1],
+          tableData[row + 1][cell],
+          tableData[row + 1][cell + 1]
+        );
+      }
+
+      const count = around.filter(m => [CODE.MINE, CODE.FLAG_MINE].includes(m))
+        .length;
+
+      tableData[row][cell] = count;
 
       return {
         ...state,
