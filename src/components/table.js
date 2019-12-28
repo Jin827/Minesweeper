@@ -6,10 +6,11 @@ import Tr from './tr';
 const Table = ({ tableData }) => (
   <table>
     <tbody>
-      {tableData.length !== 0 &&
-        Array(tableData.length)
-          .fill()
-          .map((tr, i) => <Tr key={i} tableData={tableData} />)}
+      {Array(tableData.length)
+        .fill()
+        .map((tr, i) => (
+          <Tr key={i} rowIndex={i} tableData={tableData} />
+        ))}
     </tbody>
   </table>
 );

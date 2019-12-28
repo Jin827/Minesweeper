@@ -3,13 +3,14 @@ import React from 'react';
 // ----- Components ---- //
 import Td from './td';
 
-const Tr = ({ tableData }) => (
+const Tr = ({ tableData, rowIndex }) => (
   <tr>
-    {Array(tableData[0].length)
-      .fill()
-      .map((td, i) => (
-        <Td key={i} />
-      ))}
+    {tableData[0] &&
+      Array(tableData[0].length)
+        .fill()
+        .map((td, i) => (
+          <Td key={i} rowIndex={rowIndex} cellIndex={i} tableData={tableData} />
+        ))}
   </tr>
 );
 export default Tr;
