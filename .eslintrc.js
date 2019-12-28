@@ -10,6 +10,9 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': 'warn',
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }]
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'no-unused-vars': 'warn'
+    // "react-hooks/rules-of-hooks": 'error',
+    // "react-hooks/exhaustive-deps": 'warn'
   }
 };
