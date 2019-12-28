@@ -3,20 +3,13 @@ import React from 'react';
 // ----- Components ---- //
 import Tr from './tr';
 
-const Table = ({ tableData, halted, onOpenCell, onOpenMine }) => (
+const Table = ({ tableData }) => (
   <table>
     <tbody>
       {Array(tableData.length)
         .fill()
         .map((tr, i) => (
-          <Tr
-            key={i}
-            rowIndex={i}
-            tableData={tableData}
-            halted={halted}
-            onOpenCell={onOpenCell}
-            onOpenMine={onOpenMine}
-          />
+          <Tr key={i} rowIndex={i} tableData={tableData} />
         ))}
     </tbody>
   </table>

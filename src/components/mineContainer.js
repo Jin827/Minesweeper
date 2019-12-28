@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 // ----- Components ---- //
 import Options from './options';
 import Table from './table';
-import { startGame, openCell, openMine } from '../actions/mineAction';
+import { startGame } from '../actions/mineAction';
 import './mineContainer.css';
 
 const MineContainer = ({
-  mineSearch: { tableData, mines, timer, result, halted },
-  onStartGame,
-  onOpenCell,
-  onOpenMine
+  mineSearch: { tableData, mines, timer, result },
+  onStartGame
 }) => {
   useEffect(() => () => {});
 
@@ -24,12 +22,7 @@ const MineContainer = ({
               <p>Timer : {timer}</p>
               <p>Remaining Mines : {mines}</p>
             </div>
-            <Table
-              tableData={tableData}
-              halted={halted}
-              onOpenCell={onOpenCell}
-              onOpenMine={onOpenMine}
-            />
+            <Table tableData={tableData} />
             <p>Result : {result}</p>
           </>
         ) : (
@@ -48,9 +41,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onStartGame: data => dispatch(startGame(data)),
-  onOpenCell: data => dispatch(openCell(data)),
-  onOpenMine: data => dispatch(openMine(data))
+  onStartGame: data => dispatch(startGame(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MineContainer);

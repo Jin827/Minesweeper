@@ -1,8 +1,15 @@
-/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
+import React, { useCallback } from 'react';
+import { connect } from 'react-redux';
+// ----- Components ---- //
 import { CODE } from '../utils/mines';
+import {
+  openCell,
+  clickMine,
+  flagCell,
+  normalizeCell
+} from '../actions/mineAction';
 import './td.css';
 
 const getTdStyles = code => {
@@ -11,47 +18,105 @@ const getTdStyles = code => {
     case CODE.MINE:
       return { background: '#444' };
     case CODE.CLICKED_MINE:
-      return { background: '#E8716F' };
+      return { background: 'red' };
     case CODE.OPEN:
       return { backgournd: 'white' };
+    case CODE.FLAG:
+    case CODE.FLAG_MINE:
+      return { backgournd: '#E8716F' };
     default:
       return { background: 'white' };
   }
 };
 
+const getTdText = code => {
+  switch (code) {
+    case CODE.NORMAL:
+    case CODE.OPEN:
+      return '';
+    case CODE.MINE:
+      return 'X';
+    case CODE.CLICKED_MINE:
+      return '펑';
+    case CODE.FLAG:
+    case CODE.FLAG_MINE:
+      return '!';
+    default:
+      return '';
+  }
+};
+
 const Td = ({
-  tableData,
-  halted,
+  mineSearch: { tableData, halted },
   rowIndex,
   cellIndex,
   onOpenCell,
-  onOpenMine
+  onClickMine,
+  onNormalizeCell,
+  onFlagCell
 }) => {
   const code = tableData[rowIndex][cellIndex];
 
-  const handleClick = () => {
+  const handleClickTd = useCallback(() => {
+    if (halted) {
+      return null;
+    }
     switch (code) {
-      case CODE.NORMAL: {
-        if (halted) return null;
+      case CODE.NORMAL:
         return onOpenCell({ row: rowIndex, cell: cellIndex });
-      }
-      case CODE.MINE: {
-        if (halted) return null;
-        alert('안타깝네요. 다시 도전해보세요 !!');
-        return onOpenMine({ row: rowIndex, cell: cellIndex });
-      }
+      case CODE.MINE:
+        return onClickMine({ row: rowIndex, cell: cellIndex });
       case CODE.OPEN:
+      case CODE.FLAG:
+      case CODE.FLAG_MINE:
         return null;
       default:
         return null;
     }
-  };
+  }, [code]);
+
+  const handleRightClickTd = useCallback(
+    e => {
+      e.preventDefault();
+
+      if (halted) {
+        return null;
+      }
+      switch (code) {
+        case CODE.NORMAL:
+        case CODE.MINE:
+          return onFlagCell({ row: rowIndex, cell: cellIndex });
+        case CODE.FLAG:
+        case CODE.FLAG_MINE:
+          return onNormalizeCell({ row: rowIndex, cell: cellIndex });
+        default:
+          return null;
+      }
+    },
+    [code]
+  );
 
   return (
-    <td className="td" style={getTdStyles(code)} onClick={handleClick}>
-      {code === -5 ? '펑' : ' '}
+    <td
+      className="td"
+      style={getTdStyles(code)}
+      onClick={handleClickTd}
+      onContextMenu={handleRightClickTd}
+    >
+      {getTdText(code)}
     </td>
   );
 };
 
-export default Td;
+const mapStateToProps = state => ({
+  mineSearch: state.mineSearch
+});
+
+const mapDispatchToProps = dispatch => ({
+  onOpenCell: data => dispatch(openCell(data)),
+  onClickMine: data => dispatch(clickMine(data)),
+  onNormalizeCell: data => dispatch(normalizeCell(data)),
+  onFlagCell: data => dispatch(flagCell(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Td);

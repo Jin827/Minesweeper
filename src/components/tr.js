@@ -3,22 +3,12 @@ import React from 'react';
 // ----- Components ---- //
 import Td from './td';
 
-const Tr = ({ tableData, halted, rowIndex, onOpenCell, onOpenMine }) => (
+const Tr = ({ tableData, rowIndex }) => (
   <tr>
     {tableData[0] &&
       Array(tableData[0].length)
         .fill()
-        .map((td, i) => (
-          <Td
-            key={i}
-            rowIndex={rowIndex}
-            cellIndex={i}
-            tableData={tableData}
-            halted={halted}
-            onOpenCell={onOpenCell}
-            onOpenMine={onOpenMine}
-          />
-        ))}
+        .map((td, i) => <Td key={i} rowIndex={rowIndex} cellIndex={i} />)}
   </tr>
 );
 export default Tr;

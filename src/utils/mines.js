@@ -4,7 +4,9 @@ export const CODE = {
   NORMAL: 0,
   OPEN: 1,
   MINE: -1,
-  CLICKED_MINE: -5
+  CLICKED_MINE: -5,
+  FLAG: 7,
+  FLAG_MINE: 5
 };
 
 export const plantMines = data => {

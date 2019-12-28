@@ -31,7 +31,7 @@ const MineReducer = (state = initialState, action) => {
         tableData
       };
     }
-    case types.OPEN_MINE: {
+    case types.CLICK_MINE: {
       const { row, cell } = action.data;
       const tableData = [...state.tableData];
       tableData[row] = [...state.tableData[row]];
@@ -41,6 +41,38 @@ const MineReducer = (state = initialState, action) => {
         ...state,
         tableData,
         halted: true
+      };
+    }
+    case types.FLAG_CELL: {
+      const { row, cell } = action.data;
+      const tableData = [...state.tableData];
+      tableData[row] = [...state.tableData[row]];
+
+      if (tableData[row][cell] === CODE.MINE) {
+        tableData[row][cell] = CODE.FLAG_MINE;
+      } else {
+        tableData[row][cell] = CODE.FLAG;
+      }
+
+      return {
+        ...state,
+        tableData
+      };
+    }
+    case types.NORMALIZE_CELL: {
+      const { row, cell } = action.data;
+      const tableData = [...state.tableData];
+      tableData[row] = [...state.tableData[row]];
+
+      if (tableData[row][cell] === CODE.FLAG_MINE) {
+        tableData[row][cell] = CODE.MINE;
+      } else {
+        tableData[row][cell] = CODE.NORMAL;
+      }
+
+      return {
+        ...state,
+        tableData
       };
     }
     default:
