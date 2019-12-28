@@ -2,7 +2,7 @@ import * as types from '../actions/actionTypes';
 import { plantMines } from '../utils/mines';
 
 const initialState = {
-  tableData: {},
+  tableData: [],
   mines: 0,
   timer: 0,
   result: ''

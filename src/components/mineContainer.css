@@ -1,0 +1,17 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin:  3em;
+  text-align: center;
+}
+
+.container--table {
+  margin-top: 1em;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}

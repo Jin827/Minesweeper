@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Options from './options';
 import Table from './table';
 import { startGame } from '../actions/mineAction';
+import './mineContainer.css';
 
 const MineContainer = ({
   mineSearch: { tableData, mines, timer, result },
@@ -12,13 +13,26 @@ const MineContainer = ({
   useEffect(() => () => {});
 
   return (
-    <>
+    <div className="container">
       <Options onStartGame={onStartGame} />
-      <p>Timer : {timer}</p>
-      {timer !== 0 && <p>Remaining Mines : {mines}</p>}
-      <Table />
-      <p>Result : {result}</p>
-    </>
+      <div className="container--table">
+        {tableData.length !== 0 ? (
+          <>
+            <div className="flex">
+              <p>Timer : {timer}</p>
+              <p>Remaining Mines : {mines}</p>
+            </div>
+            <Table tableData={tableData} />
+            <p>Result : {result}</p>
+          </>
+        ) : (
+          <>
+            <h1>지뢰 게임</h1>
+            <p>시작 버튼을 클릭해주세요 !!</p>
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 
