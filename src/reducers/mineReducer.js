@@ -83,7 +83,8 @@ const MineReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        tableData
+        tableData,
+        mines: state.mines === 0 ? 0 : state.mines - 1
       };
     }
     case types.NORMALIZE_CELL: {
@@ -99,7 +100,8 @@ const MineReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        tableData
+        tableData,
+        mines: state.mines === 0 ? 0 : state.mines + 1
       };
     }
     default:
