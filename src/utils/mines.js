@@ -1,9 +1,10 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable import/prefer-default-export */
-const CODE = {
+export const CODE = {
   NORMAL: 0,
   OPEN: 1,
-  MINE: -1
+  MINE: -1,
+  CLICKED_MINE: -5
 };
 
 export const plantMines = data => {
