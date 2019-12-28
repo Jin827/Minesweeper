@@ -18,6 +18,7 @@ const Options = () => {
           type="number"
           id="row"
           placeholder="가로"
+          className="form--input"
           value={row}
           onChange={handleChange}
         />
@@ -28,6 +29,7 @@ const Options = () => {
           type="number"
           id="cell"
           placeholder="세로"
+          className="form--input"
           value={cell}
           onChange={handleChange}
         />
@@ -38,10 +40,14 @@ const Options = () => {
           type="number"
           id="mine"
           placeholder="지뢰"
+          className="form--input"
           value={mine}
           onChange={handleChange}
         />
       </label>
+      <button type="button" className="form--btn">
+        시작
+      </button>
     </div>
   );
 };
