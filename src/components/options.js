@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 // ----- Components ---- //
 import './options.css';
 
-const Options = () => {
+const Options = ({ onStartGame }) => {
   const [state, setState] = useState({ row: 8, cell: 8, mine: 4 });
 
   const handleChange = ({ target: { id, value } }) =>
     setState({ ...state, [id]: value });
+
+  const handleClick = () => onStartGame(state);
 
   const { row, cell, mine } = state;
 
@@ -45,7 +47,7 @@ const Options = () => {
           onChange={handleChange}
         />
       </label>
-      <button type="button" className="form--btn">
+      <button type="button" className="form--btn" onClick={handleClick}>
         시작
       </button>
     </div>

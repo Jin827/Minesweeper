@@ -11,7 +11,8 @@ module.exports = {
   rules: {
     'prettier/prettier': 'warn',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
-    'no-unused-vars': 'warn'
+    'no-unused-vars': 'warn',
+    'react/prop-types': 0
     // "react-hooks/rules-of-hooks": 'error',
     // "react-hooks/exhaustive-deps": 'warn'
   }
