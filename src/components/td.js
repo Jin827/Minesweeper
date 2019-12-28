@@ -71,7 +71,7 @@ const Td = ({
       default:
         return null;
     }
-  }, [code]);
+  }, [code, halted]);
 
   const handleRightClickTd = useCallback(
     e => {
@@ -91,7 +91,7 @@ const Td = ({
           return null;
       }
     },
-    [code]
+    [code, halted]
   );
 
   return (
