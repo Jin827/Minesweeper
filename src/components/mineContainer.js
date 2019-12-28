@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 // ----- Components ---- //
 import Options from './options';
@@ -8,10 +8,13 @@ const MineContainer = ({
   mineSearch: { tableData, timer, result },
   onStartGame
 }) => {
+  useEffect(() => () => {});
+
   return (
     <>
       <Options onStartGame={onStartGame} />
       <p>Timer : {timer}</p>
+      {timer !== 0 && <p>Remaining Mines : {tableData.mine}</p>}
       <p>Result : {result}</p>
     </>
   );
