@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 // ----- Components ---- //
 import Options from './options';
+import Table from './table';
 import { startGame } from '../actions/mineAction';
 
 const MineContainer = ({
-  mineSearch: { tableData, timer, result },
+  mineSearch: { tableData, mines, timer, result },
   onStartGame
 }) => {
   useEffect(() => () => {});
@@ -14,7 +15,8 @@ const MineContainer = ({
     <>
       <Options onStartGame={onStartGame} />
       <p>Timer : {timer}</p>
-      {timer !== 0 && <p>Remaining Mines : {tableData.mine}</p>}
+      {timer !== 0 && <p>Remaining Mines : {mines}</p>}
+      <Table />
       <p>Result : {result}</p>
     </>
   );
