@@ -7,18 +7,21 @@ import { startGame, increaseTimer } from '../actions/mineAction';
 import './mineContainer.css';
 
 const MineContainer = ({
-  mineSearch: { tableData, data, timer, result },
+  mineSearch: { tableData, data, timer, result, halted },
   onStartGame,
   onIncreaseTimer
 }) => {
   useEffect(() => {
-    const time = setInterval(() => {
-      onIncreaseTimer();
-    }, 1000);
+    let time;
+    if (!halted) {
+      time = setInterval(() => {
+        onIncreaseTimer();
+      }, 1000);
+    }
     return () => {
       clearInterval(time);
     };
-  }, []);
+  }, [halted]);
 
   return (
     <div className="container">
