@@ -45,3 +45,43 @@ export const plantMines = data => {
 
   return tableData;
 };
+
+export const observer = state => {
+  let halted = false;
+  let result = '';
+  const { data } = state;
+
+  if (data.row * data.cell - data.mine === state.openedCells + 1) {
+    halted = true;
+    result = 'Yayyyyyy 승리하셨습니다 !!';
+  }
+
+  return { halted, result };
+};
+
+export const countingMines = (tableData, row, cell) => {
+  // Getting the number of mines around
+  let around = [];
+  if (tableData[row - 1]) {
+    around = around.concat(
+      tableData[row - 1][cell - 1],
+      tableData[row - 1][cell],
+      tableData[row - 1][cell + 1]
+    );
+  }
+
+  around = around.concat(tableData[row][cell - 1], tableData[row][cell + 1]);
+
+  if (tableData[row + 1]) {
+    around = around.concat(
+      tableData[row + 1][cell - 1],
+      tableData[row + 1][cell],
+      tableData[row + 1][cell + 1]
+    );
+  }
+
+  const count = around.filter(m => [CODE.MINE, CODE.FLAG_MINE].includes(m))
+    .length;
+
+  return count;
+};

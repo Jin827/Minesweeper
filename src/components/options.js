@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './options.css';
 
 const Options = ({ onStartGame }) => {
-  const [state, setState] = useState({ row: 8, cell: 8, mine: 4 });
+  const [state, setState] = useState({ row: 2, cell: 2, mine: 1 });
 
   const handleChange = ({ target: { id, value } }) =>
     setState({ ...state, [id]: value });

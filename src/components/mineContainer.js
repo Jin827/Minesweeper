@@ -7,11 +7,11 @@ import { startGame } from '../actions/mineAction';
 import './mineContainer.css';
 
 const MineContainer = ({
-  mineSearch: { tableData, mines, timer, result },
+  mineSearch: { tableData, data, timer, result },
   onStartGame
 }) => {
   useEffect(() => () => {});
-
+  console.log(result);
   return (
     <div className="container">
       <Options onStartGame={onStartGame} />
@@ -20,10 +20,9 @@ const MineContainer = ({
           <>
             <div className="flex">
               <p>Timer : {timer}</p>
-              <p>Remaining Mines : {mines}</p>
+              <p>Remaining Mines : {data.mine}</p>
             </div>
             <Table tableData={tableData} />
-            <p>Result : {result}</p>
           </>
         ) : (
           <>
@@ -31,6 +30,7 @@ const MineContainer = ({
             <p>시작 버튼을 클릭해주세요 !!</p>
           </>
         )}
+        <p>{result}</p>
       </div>
     </div>
   );

@@ -1,12 +1,13 @@
 import * as types from '../actions/actionTypes';
-import { CODE, plantMines } from '../utils/mines';
+import { CODE, plantMines, countingMines, observer } from '../utils/mines';
 
 const initialState = {
   tableData: [],
-  mines: 0,
+  data: {},
   timer: 0,
   result: '',
-  halted: false
+  halted: false,
+  openedCells: 0
 };
 
 const MineReducer = (state = initialState, action) => {
@@ -15,47 +16,29 @@ const MineReducer = (state = initialState, action) => {
       return {
         ...state,
         tableData: plantMines(action.data),
-        mines: action.data.mine,
+        data: action.data,
         timer: 0,
         result: '',
-        halted: false
+        halted: false,
+        openedCells: 0
       };
     case types.OPEN_CELL: {
       const { row, cell } = action.data;
       const tableData = [...state.tableData];
       tableData[row] = [...state.tableData[row]];
 
-      let around = [];
-
-      if (tableData[row - 1]) {
-        around = around.concat(
-          tableData[row - 1][cell - 1],
-          tableData[row - 1][cell],
-          tableData[row - 1][cell + 1]
-        );
-      }
-
-      around = around.concat(
-        tableData[row][cell - 1],
-        tableData[row][cell + 1]
-      );
-
-      if (tableData[row + 1]) {
-        around = around.concat(
-          tableData[row + 1][cell - 1],
-          tableData[row + 1][cell],
-          tableData[row + 1][cell + 1]
-        );
-      }
-
-      const count = around.filter(m => [CODE.MINE, CODE.FLAG_MINE].includes(m))
-        .length;
-
+      const count = countingMines(tableData, row, cell);
       tableData[row][cell] = count;
+
+      const gameChecker = observer(state);
+      const { halted, result } = gameChecker;
 
       return {
         ...state,
-        tableData
+        tableData,
+        openedCells: state.openedCells + 1,
+        halted,
+        result
       };
     }
     case types.CLICK_MINE: {
@@ -67,7 +50,8 @@ const MineReducer = (state = initialState, action) => {
       return {
         ...state,
         tableData,
-        halted: true
+        halted: true,
+        result: '펑 !!! 폭탄이 터졌어요 ! 다시 시도해보세요 ㅜㅜ'
       };
     }
     case types.FLAG_CELL: {
@@ -81,10 +65,19 @@ const MineReducer = (state = initialState, action) => {
         tableData[row][cell] = CODE.FLAG;
       }
 
+      const status = observer(state);
+      const { halted, result } = status;
+
       return {
         ...state,
         tableData,
-        mines: state.mines === 0 ? 0 : state.mines - 1
+        openedCells: state.openedCells + 1,
+        halted,
+        result,
+        data: {
+          ...state.data,
+          mine: state.data.mine === 0 ? 0 : state.data.mine - 1
+        }
       };
     }
     case types.NORMALIZE_CELL: {
@@ -101,7 +94,11 @@ const MineReducer = (state = initialState, action) => {
       return {
         ...state,
         tableData,
-        mines: state.mines === 0 ? 0 : state.mines + 1
+        openedCells: state.openedCells - 1,
+        data: {
+          ...state.data,
+          mine: state.data.mine + 1
+        }
       };
     }
     default:
