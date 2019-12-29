@@ -25,3 +25,7 @@ export const normalizeCell = data => ({
   type: types.NORMALIZE_CELL,
   data
 });
+
+export const increaseTimer = () => ({
+  type: types.INCREASE_TIMER
+});

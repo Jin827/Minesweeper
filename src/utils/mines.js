@@ -60,7 +60,6 @@ export const observer = state => {
 };
 
 export const countingMines = (tableData, row, cell) => {
-  // Getting the number of mines around
   let around = [];
   if (tableData[row - 1]) {
     around = around.concat(

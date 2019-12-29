@@ -101,6 +101,15 @@ const MineReducer = (state = initialState, action) => {
         }
       };
     }
+    case types.INCREASE_TIMER: {
+      if (!state.halted) {
+        return {
+          ...state,
+          timer: state.timer + 1
+        };
+      }
+      return state;
+    }
     default:
       return state;
   }

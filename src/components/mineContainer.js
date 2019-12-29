@@ -3,15 +3,23 @@ import { connect } from 'react-redux';
 // ----- Components ---- //
 import Options from './options';
 import Table from './table';
-import { startGame } from '../actions/mineAction';
+import { startGame, increaseTimer } from '../actions/mineAction';
 import './mineContainer.css';
 
 const MineContainer = ({
   mineSearch: { tableData, data, timer, result },
-  onStartGame
+  onStartGame,
+  onIncreaseTimer
 }) => {
-  useEffect(() => () => {});
-  console.log(result);
+  useEffect(() => {
+    const time = setInterval(() => {
+      onIncreaseTimer();
+    }, 1000);
+    return () => {
+      clearInterval(time);
+    };
+  }, []);
+
   return (
     <div className="container">
       <Options onStartGame={onStartGame} />
@@ -41,7 +49,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onStartGame: data => dispatch(startGame(data))
+  onStartGame: data => dispatch(startGame(data)),
+  onIncreaseTimer: () => dispatch(increaseTimer())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MineContainer);
