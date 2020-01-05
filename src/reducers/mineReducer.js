@@ -1,5 +1,11 @@
 import * as types from '../actions/actionTypes';
-import { CODE, plantMines, countingMines, observer } from '../utils/mines';
+import {
+  CODE,
+  plantMines,
+  removeMine,
+  countingMines,
+  observer
+} from '../utils/mines';
 
 const initialState = {
   tableData: [],
@@ -59,8 +65,11 @@ const MineReducer = (state = initialState, action) => {
       const tableData = [...state.tableData];
       tableData[row] = [...state.tableData[row]];
 
+      const data = { ...state.data };
+
       if (tableData[row][cell] === CODE.MINE) {
         tableData[row][cell] = CODE.FLAG_MINE;
+        data.mine = state.data.mine === 0 ? 0 : state.data.mine - 1;
       } else {
         tableData[row][cell] = CODE.FLAG;
       }
@@ -74,10 +83,7 @@ const MineReducer = (state = initialState, action) => {
         openedCells: state.openedCells + 1,
         halted,
         result,
-        data: {
-          ...state.data,
-          mine: state.data.mine === 0 ? 0 : state.data.mine - 1
-        }
+        data
       };
     }
     case types.NORMALIZE_CELL: {
@@ -85,8 +91,11 @@ const MineReducer = (state = initialState, action) => {
       const tableData = [...state.tableData];
       tableData[row] = [...state.tableData[row]];
 
+      const data = { ...state.data };
+
       if (tableData[row][cell] === CODE.FLAG_MINE) {
         tableData[row][cell] = CODE.MINE;
+        data.mine = state.data.mine + 1;
       } else {
         tableData[row][cell] = CODE.NORMAL;
       }
@@ -95,10 +104,7 @@ const MineReducer = (state = initialState, action) => {
         ...state,
         tableData,
         openedCells: state.openedCells - 1,
-        data: {
-          ...state.data,
-          mine: state.data.mine + 1
-        }
+        data
       };
     }
     case types.INCREASE_TIMER: {

@@ -46,6 +46,10 @@ export const plantMines = data => {
   return tableData;
 };
 
+export const removeMine = tableData => {
+  console.log('tableData: ', tableData);
+};
+
 export const observer = state => {
   let halted = false;
   let result = '';
