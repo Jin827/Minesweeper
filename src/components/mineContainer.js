@@ -27,7 +27,7 @@ const MineContainer = ({
     <div className="container">
       <Options onStartGame={onStartGame} />
       <div className="container--table">
-        {tableData.length !== 0 ? (
+        {tableData && tableData.length !== 0 ? (
           <>
             <div className="flex">
               <p>Timer : {timer}</p>

@@ -1,11 +1,5 @@
 import * as types from '../actions/actionTypes';
-import {
-  CODE,
-  plantMines,
-  removeMine,
-  countingMines,
-  observer
-} from '../utils/mines';
+import { CODE, plantMines, countingMines, observer } from '../utils/mines';
 
 const initialState = {
   tableData: [],
@@ -66,17 +60,19 @@ const MineReducer = (state = initialState, action) => {
       tableData[row] = [...state.tableData[row]];
 
       const data = { ...state.data };
+      let status = { halted: false, result: '' };
 
       if (tableData[row][cell] === CODE.MINE) {
         tableData[row][cell] = CODE.FLAG_MINE;
-        data.mine = state.data.mine === 0 ? 0 : state.data.mine - 1;
+        const recountMines = state.data.mine === 0 ? 0 : state.data.mine - 1;
+        data.mine = recountMines;
+
+        status = observer(recountMines);
       } else {
         tableData[row][cell] = CODE.FLAG;
       }
 
-      const status = observer(state);
       const { halted, result } = status;
-
       return {
         ...state,
         tableData,

@@ -46,16 +46,11 @@ export const plantMines = data => {
   return tableData;
 };
 
-export const removeMine = tableData => {
-  console.log('tableData: ', tableData);
-};
-
-export const observer = state => {
+export const observer = mines => {
   let halted = false;
   let result = '';
-  const { data } = state;
 
-  if (data.row * data.cell - data.mine === state.openedCells + 1) {
+  if (mines === 0) {
     halted = true;
     result = 'Yayyyyyy 승리하셨습니다 !!';
   }
