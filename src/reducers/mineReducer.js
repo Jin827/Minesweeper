@@ -60,19 +60,17 @@ const MineReducer = (state = initialState, action) => {
       tableData[row] = [...state.tableData[row]];
 
       const data = { ...state.data };
-      let status = { halted: false, result: '' };
 
       if (tableData[row][cell] === CODE.MINE) {
         tableData[row][cell] = CODE.FLAG_MINE;
-        const recountMines = state.data.mine === 0 ? 0 : state.data.mine - 1;
-        data.mine = recountMines;
-
-        status = observer(recountMines);
+        data.mine = state.data.mine === 0 ? 0 : state.data.mine - 1;
       } else {
         tableData[row][cell] = CODE.FLAG;
       }
 
+      const status = observer(state);
       const { halted, result } = status;
+
       return {
         ...state,
         tableData,

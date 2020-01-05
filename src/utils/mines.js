@@ -46,11 +46,12 @@ export const plantMines = data => {
   return tableData;
 };
 
-export const observer = mines => {
+export const observer = state => {
   let halted = false;
   let result = '';
+  const { data } = state;
 
-  if (mines === 0) {
+  if (data.row * data.cell - data.mine === state.openedCells + 1) {
     halted = true;
     result = 'Yayyyyyy 승리하셨습니다 !!';
   }
